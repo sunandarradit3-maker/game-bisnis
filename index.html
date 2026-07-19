@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#07111f" />
+  <meta name="description" content="Demo Business Rivals Online — simulator bisnis 3D multiplayer dengan musim kompetitif 2 bulanan." />
+  <title>Business Rivals Online — Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Business Rivals Online">
+      <span class="brand-mark">BR</span>
+      <span>
+        <strong>BUSINESS RIVALS</strong>
+        <small>ONLINE · DEMO</small>
+      </span>
+    </a>
+
+    <div class="season-box">
+      <span class="status-dot"></span>
+      <div>
+        <small>SEASON 01 BERAKHIR</small>
+        <strong id="countdown">59H 23J 59M</strong>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button id="marketEventBtn" class="icon-button" aria-label="Buat event pasar">⚡</button>
+      <button id="soundBtn" class="icon-button" aria-label="Aktifkan atau matikan suara">🔊</button>
+      <button id="profileBtn" class="profile-chip">
+        <span class="profile-avatar">R</span>
+        <span><small>CEO</small><strong id="headerName">Rookie</strong></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="game-shell">
+    <aside class="sidebar left-panel">
+      <nav class="main-nav" aria-label="Menu utama">
+        <button class="nav-item active" data-view="city"><span>🏙️</span><span>Kota</span></button>
+        <button class="nav-item" data-view="company"><span>🏢</span><span>Perusahaan</span></button>
+        <button class="nav-item" data-view="market"><span>📈</span><span>Pasar</span></button>
+        <button class="nav-item" data-view="partners"><span>🤝</span><span>Partner</span></button>
+        <button class="nav-item" data-view="season"><span>🏆</span><span>Season</span></button>
+      </nav>
+
+      <section class="mission-card">
+        <div class="mission-head">
+          <div><small>MISI HARIAN</small><strong>Langkah Pertama</strong></div>
+          <span id="missionProgress">1/3</span>
+        </div>
+        <p>Bangun perusahaan, lakukan transaksi, lalu ajak satu partner.</p>
+        <div class="progress"><span id="missionBar" style="width:33%"></span></div>
+        <button id="claimMission" class="text-button" disabled>Klaim Rp50 jt</button>
+      </section>
+
+      <section class="online-card">
+        <div class="section-title"><span>PEMAIN ONLINE</span><strong>1.248</strong></div>
+        <div class="online-list">
+          <div><span class="mini-avatar purple">A</span><p><strong>ArdiCEO</strong><small>Jakarta-01</small></p><i></i></div>
+          <div><span class="mini-avatar cyan">N</span><p><strong>NayaGroup</strong><small>Bandung-02</small></p><i></i></div>
+          <div><span class="mini-avatar orange">D</span><p><strong>DimasCorp</strong><small>Surabaya-01</small></p><i></i></div>
+        </div>
+      </section>
+    </aside>
+
+    <section class="world-column">
+      <div class="world-toolbar">
+        <div>
+          <span class="server-pill"><i></i> ASIA · JAKARTA-01</span>
+          <h1 id="viewTitle">Financial District</h1>
+        </div>
+        <div class="camera-controls">
+          <button id="zoomOut" aria-label="Perkecil">−</button>
+          <button id="resetCamera" aria-label="Atur ulang kamera">◎</button>
+          <button id="zoomIn" aria-label="Perbesar">+</button>
+        </div>
+      </div>
+
+      <div id="world" class="world" tabindex="0" aria-label="Peta kota 3D interaktif">
+        <div class="sky-glow glow-one"></div>
+        <div class="sky-glow glow-two"></div>
+
+        <div id="isoScene" class="iso-scene">
+          <div class="district-base"></div>
+          <div class="road road-a"></div>
+          <div class="road road-b"></div>
+          <div class="road-line road-line-a"></div>
+          <div class="road-line road-line-b"></div>
+
+          <button class="building tower-one" data-building="NEXA Tower" data-type="Teknologi">
+            <span class="building-top"></span><span class="building-front"></span><span class="building-side"></span>
+            <em>NEXA</em>
+          </button>
+          <button class="building tower-two" data-building="Capital Bank" data-type="Keuangan">
+            <span class="building-top"></span><span class="building-front"></span><span class="building-side"></span>
+            <em>BANK</em>
+          </button>
+          <button class="building shop-one" data-building="Urban Mart" data-type="Retail">
+            <span class="building-top"></span><span class="building-front"></span><span class="building-side"></span>
+            <em>MART</em>
+          </button>
+          <button class="building shop-two" data-building="Hot Plate" data-type="Kuliner">
+            <span class="building-top"></span><span class="building-front"></span><span class="building-side"></span>
+            <em>FOOD</em>
+          </button>
+          <button class="building warehouse" data-building="Logistik Hub" data-type="Logistik">
+            <span class="building-top"></span><span class="building-front"></span><span class="building-side"></span>
+            <em>HUB</em>
+          </button>
+
+          <div class="tree tree-a"><i></i><span></span></div>
+          <div class="tree tree-b"><i></i><span></span></div>
+          <div class="tree tree-c"><i></i><span></span></div>
+          <div class="tree tree-d"><i></i><span></span></div>
+
+          <div id="playerCharacter" class="character" aria-label="Karakter pemain">
+            <div class="nameplate"><span id="characterName">Rookie</span><small id="companyTag">BELUM PUNYA PT</small></div>
+            <span class="head"></span><span class="body"></span><span class="arm arm-left"></span><span class="arm arm-right"></span><span class="leg leg-left"></span><span class="leg leg-right"></span><span class="shadow"></span>
+          </div>
+
+          <div class="npc npc-one"><span></span><i></i></div>
+          <div class="npc npc-two"><span></span><i></i></div>
+          <div class="delivery-truck"><span></span><i></i><b></b></div>
+        </div>
+
+        <div class="world-hint">Klik gedung untuk melihat peluang bisnis · WASD / tombol arah untuk bergerak</div>
+
+        <div id="buildingCard" class="floating-card hidden">
+          <button id="closeBuilding" aria-label="Tutup">×</button>
+          <small>PELUANG BISNIS</small>
+          <h3 id="buildingName">NEXA Tower</h3>
+          <p id="buildingType">Sektor teknologi sedang tumbuh +12,4% minggu ini.</p>
+          <div class="floating-stats"><span><small>Modal masuk</small><strong id="buildingCost">Rp120 jt</strong></span><span><small>Potensi ROI</small><strong id="buildingRoi">18%</strong></span></div>
+          <button id="investBtn" class="primary-button">Investasi Demo</button>
+        </div>
+      </div>
+
+      <section class="economy-ticker" aria-label="Ticker ekonomi">
+        <div class="ticker-label"><span>LIVE MARKET</span><i></i></div>
+        <div class="ticker-window"><div id="tickerTrack" class="ticker-track"></div></div>
+      </section>
+    </section>
+
+    <aside class="sidebar right-panel">
+      <section class="balance-card">
+        <small>TOTAL KEKAYAAN</small>
+        <h2 id="netWorth">Rp250.000.000</h2>
+        <div class="balance-change"><span>▲ 4,8%</span> minggu ini</div>
+        <div class="balance-grid">
+          <div><small>Uang tunai</small><strong id="cashValue">Rp250 jt</strong></div>
+          <div><small>Valuasi PT</small><strong id="companyValue">Rp0</strong></div>
+        </div>
+      </section>
+
+      <section class="leaderboard-card">
+        <div class="section-title"><div><span>PERINGKAT DUNIA</span><small>Top perusahaan · Season 01</small></div><button id="refreshLeaderboard" title="Perbarui leaderboard">↻</button></div>
+        <div id="leaderboard" class="leaderboard"></div>
+        <button id="showFullLeaderboard" class="secondary-button">Lihat Peringkat Lengkap</button>
+      </section>
+
+      <section class="company-mini-card">
+        <div class="section-title"><span>PERUSAHAAN SAYA</span><button id="editCompanyBtn">✎</button></div>
+        <div id="emptyCompany" class="empty-company">
+          <div class="empty-icon">＋</div>
+          <strong>Belum punya perusahaan</strong>
+          <p>Mulai dari bisnis kecil dan rebut posisi pertama.</p>
+          <button id="createCompanyBtn" class="primary-button">Buat Perusahaan</button>
+        </div>
+        <div id="activeCompany" class="active-company hidden">
+          <div class="company-logo" id="companyLogo">RC</div>
+          <div><small id="companyIndustry">RETAIL</small><strong id="companyName">Rookie Corp</strong><p><span id="companyLevel">Level 1</span> · <span id="employeeCount">4 karyawan</span></p></div>
+          <div class="company-metrics"><span><small>Omzet/jam</small><strong id="revenueRate">Rp2,4 jt</strong></span><span><small>Reputasi</small><strong id="reputation">52</strong></span></div>
+          <button id="runBusinessBtn" class="primary-button">Jalankan Bisnis</button>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <div id="companyModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="companyModalTitle">
+    <form id="companyForm" class="modal-card">
+      <button type="button" class="modal-close" data-close-modal="companyModal">×</button>
+      <div class="modal-kicker">BANGUN EMPIRE PERTAMA</div>
+      <h2 id="companyModalTitle">Buat Perusahaan</h2>
+      <p>Pilih sektor awal. Di versi penuh, setiap sektor punya rantai pasok, pesaing, dan kondisi pasar sendiri.</p>
+      <label>Nama perusahaan<input id="companyNameInput" maxlength="22" placeholder="Contoh: DiTz Group" required /></label>
+      <div class="industry-grid">
+        <label class="industry-option"><input type="radio" name="industry" value="Kuliner" checked><span>🍜</span><strong>Kuliner</strong><small>Mudah dimulai</small></label>
+        <label class="industry-option"><input type="radio" name="industry" value="Retail"><span>🛍️</span><strong>Retail</strong><small>Stabil & fleksibel</small></label>
+        <label class="industry-option"><input type="radio" name="industry" value="Teknologi"><span>💻</span><strong>Teknologi</strong><small>Risiko tinggi</small></label>
+        <label class="industry-option"><input type="radio" name="industry" value="Logistik"><span>🚚</span><strong>Logistik</strong><small>Skala besar</small></label>
+      </div>
+      <div class="modal-cost"><span>Modal awal</span><strong>Rp100.000.000</strong></div>
+      <button type="submit" class="primary-button large">Dirikan Perusahaan</button>
+    </form>
+  </div>
+
+  <div id="partnerModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="partnerModalTitle">
+    <div class="modal-card small-modal">
+      <button type="button" class="modal-close" data-close-modal="partnerModal">×</button>
+      <div class="modal-kicker">SISTEM PARTNER DEMO</div>
+      <h2 id="partnerModalTitle">Cari Rekan Bisnis</h2>
+      <p>Undang teman menjadi co-founder, pemasok, atau investor perusahaan.</p>
+      <div class="partner-list">
+        <button data-partner="ArdiCEO"><span class="mini-avatar purple">A</span><p><strong>ArdiCEO</strong><small>Investor · Online</small></p><em>Undang</em></button>
+        <button data-partner="NayaGroup"><span class="mini-avatar cyan">N</span><p><strong>NayaGroup</strong><small>Supplier · Online</small></p><em>Undang</em></button>
+        <button data-partner="DimasCorp"><span class="mini-avatar orange">D</span><p><strong>DimasCorp</strong><small>Co-founder · Online</small></p><em>Undang</em></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="leaderboardModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="leaderboardModalTitle">
+    <div class="modal-card leaderboard-modal-card">
+      <button type="button" class="modal-close" data-close-modal="leaderboardModal">×</button>
+      <div class="modal-kicker">SEASON 01 · GLOBAL</div>
+      <h2 id="leaderboardModalTitle">Peringkat Perusahaan</h2>
+      <p>Peringkat di-reset setiap dua bulan. Trofi, kosmetik, dan riwayat prestasi tetap tersimpan.</p>
+      <div id="fullLeaderboard" class="full-leaderboard"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
