@@ -32,26 +32,41 @@ jobs:
 
       - name: Decode project
         run: |
-          rm -rf build-src
-          mkdir -p build-src
+          rm -rf build-src dist
+          mkdir -p build-src dist
           base64 -d astra-gameboost-source.b64 > build-src/source.zip
           cd build-src
           unzip -q source.zip
 
       - name: Build debug APK
+        id: build
+        continue-on-error: true
         working-directory: build-src/AstraGameBoost
-        run: gradle --no-daemon :app:assembleDebug
-
-      - name: Publish APK to branch
+        shell: bash
         run: |
-          mkdir -p dist
-          cp build-src/AstraGameBoost/app/build/outputs/apk/debug/app-debug.apk dist/AstraGameBoost-Premium.apk
+          set +e
+          gradle --no-daemon :app:assembleDebug 2>&1 | tee ../../dist/build.log
+          code=${PIPESTATUS[0]}
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit $code
+
+      - name: Publish APK and build log
+        if: always()
+        shell: bash
+        run: |
+          if [ -f build-src/AstraGameBoost/app/build/outputs/apk/debug/app-debug.apk ]; then
+            cp build-src/AstraGameBoost/app/build/outputs/apk/debug/app-debug.apk dist/AstraGameBoost-Premium.apk
+          fi
+          if [ ! -f dist/build.log ]; then
+            echo "Build step did not produce a log." > dist/build.log
+          fi
+          echo "build_exit_code=${{ steps.build.outputs.exit_code }}" >> dist/build.log
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dist/AstraGameBoost-Premium.apk
+          git add dist
           if git diff --cached --quiet; then
-            echo "APK unchanged"
+            echo "No new output"
           else
-            git commit -m "Build Astra GameBoost Premium APK"
+            git commit -m "Publish Astra GameBoost build output"
             git push
           fi
