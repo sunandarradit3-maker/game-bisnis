@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - astra-gameboost-build-20260920
-    paths-ignore:
-      - "dist/**"
+    paths:
+      - "build-trigger.txt"
 
 permissions:
   contents: write
@@ -30,22 +30,15 @@ jobs:
         with:
           gradle-version: "8.10.2"
 
-      - name: Decode project
-        run: |
-          rm -rf build-src dist
-          mkdir -p build-src dist
-          base64 -d astra-gameboost-source.b64 > build-src/source.zip
-          cd build-src
-          unzip -q source.zip
-
       - name: Build debug APK
         id: build
         continue-on-error: true
-        working-directory: build-src/AstraGameBoost
+        working-directory: astra-gameboost
         shell: bash
         run: |
           set +e
-          gradle --no-daemon :app:assembleDebug 2>&1 | tee ../../dist/build.log
+          mkdir -p ../dist
+          gradle --no-daemon :app:assembleDebug 2>&1 | tee ../dist/build.log
           code=${PIPESTATUS[0]}
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
           exit $code
@@ -54,8 +47,8 @@ jobs:
         if: always()
         shell: bash
         run: |
-          if [ -f build-src/AstraGameBoost/app/build/outputs/apk/debug/app-debug.apk ]; then
-            cp build-src/AstraGameBoost/app/build/outputs/apk/debug/app-debug.apk dist/AstraGameBoost-Premium.apk
+          if [ -f astra-gameboost/app/build/outputs/apk/debug/app-debug.apk ]; then
+            cp astra-gameboost/app/build/outputs/apk/debug/app-debug.apk dist/AstraGameBoost-Premium.apk
           fi
           if [ ! -f dist/build.log ]; then
             echo "Build step did not produce a log." > dist/build.log
